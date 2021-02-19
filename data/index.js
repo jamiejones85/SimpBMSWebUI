@@ -1,6 +1,18 @@
 /** @brief excutes when page finished loading. Creates tables and chart */
 var output, websocket,chartSpeed
 
+function toggleHidden(id) {
+	const element = document.getElementById(id);
+	if (element.classList.contains('hidden')) {
+		element.classList.remove('hidden');
+
+	} else {
+		element.classList.add('hidden');
+
+	}
+
+	return false
+}
 function setValue(id, value) {
 	const element = document.getElementById(id);
 	element.innerHTML = value
@@ -22,8 +34,8 @@ function updateText(data) {
 
 function onLoad() {
 	output = document.getElementById("output");
-	chargerWebSocket("ws://"+ location.host +":81");
 	initGauges();
+	chargerWebSocket("ws://"+ location.host +":81");
 }
 
 function onOpen(evt) {

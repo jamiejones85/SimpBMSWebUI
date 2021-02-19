@@ -161,9 +161,9 @@ var initGauges = function() {
             // the value axis
             yAxis: {
                 stops: [
-                    [0.9, '#55BF3B'], // green
-                    [0.8, '#DDDF0D'], // yellow
-                    [0.1, '#DF5353'] // red
+                    [0.1, '#DF5353'], // red
+                    [0.3, '#DDDF0D'], // yellow
+                    [0.4, '#55BF3B'] // green
                 ],
                 lineWidth: 0,
                 tickWidth: 0,
@@ -251,9 +251,9 @@ var initGauges = function() {
             // the value axis
             yAxis: {
                 stops: [
-                    [0.9, '#55BF3B'], // green
-                    [0.8, '#DDDF0D'], // yellow
-                    [0.1, '#DF5353'] // red
+                    [0.2, '#a4d4ff'], // blue
+                    [0.3, '#55BF3B'], // green
+                    [0.9, '#DF5353'] // red
                 ],
                 lineWidth: 0,
                 tickWidth: 0,
@@ -281,7 +281,7 @@ var initGauges = function() {
     
         chartTemp = Highcharts.chart('container-temp', Highcharts.merge(gaugeOptions, {
             yAxis: {
-                min: 0,
+                min: -5,
                 max: 70,	
                 title: {
                     text: 'Temp'
@@ -294,7 +294,7 @@ var initGauges = function() {
         
             series: [{
                 name: 'Temp',
-                data: [0],
+                data: [20],
                 dataLabels: {
                     format:
                         '<div style="text-align:center">' +

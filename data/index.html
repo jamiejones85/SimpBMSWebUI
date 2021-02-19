@@ -31,15 +31,27 @@
 </head>
 <body onload="onLoad()">
 
-
-<h2 id="log">Status</h2>
 <div id="output">
-	<div>Status: <span id="mode"></span></div>
-	<div>Cell Delta: <span id="celldelta"></span>mV</div>
-	<div>Highest Cell: <span id="cellhigh"></span>mV</div>
-	<div>Lowest Cell: <span id="celllow"></span>mV</div>
+	<div class="flex-block">
+		<div class="info-block">
+			<h3>Status</h3> 
+			<div class="data" id="mode">Drive</div>
+		</div>
+		<div class="info-block">
+			<h3>Cell Delta</h3> 
+			<div class="data"><span id="celldelta">34</span>mV</div>
+		</div>
+		<div class="info-block">
+			<h3>Highest Cell</h3> 
+			<div class="data"><span id="cellhigh">3570</span>mV</div>
+		</div>
+		<div class="info-block">
+			<h3>Lowest Cell</h3> 
+			<div class="data"><span id="celllow">3270</span>mV</div>
+		</div>
+	</div>
 
-	<figure class="highcharts-figure">
+	<figure class="highcharts-figure flex-block">
 		<div id="container-soc" class="chart-container"></div>
 		<div id="container-temp" class="chart-container"></div>
 		<div id="container-current" class="chart-container"></div>
@@ -50,12 +62,14 @@
 </div>
 
 <p><a href="/wifi">Wifi Settings</a>
-
+<p><a href="#" onclick="toggleHidden('update')">Upload Update</a>
+<div id="update" class="hidden">
 	<h2 id="update">Update</h2>
-	<p>Use binary files (*.hex) for updating inverter firmware. Upload any other file for updating this web interface.</p>
+	<p>Upload any files for updating this web interface.</p>
 	<form id="uploadform" enctype="multipart/form-data" action="edit" method="POST">
 		<input id="updatefile" name="updatefile" type="file" onchange="fileSelected();" />
 		<input type="button" onclick="uploadFile();" value="Upload" />
 	</form>
+</div>
 </body>
 </html>
