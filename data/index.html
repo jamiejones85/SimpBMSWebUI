@@ -21,31 +21,41 @@
  *
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Prius Charger Console</title>
+<title>SimpBMS</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
+<script src="highcharts.js" type="text/javascript"></script>
+<script src="highcharts-more.js" type="text/javascript"></script>
+<script src="solid-gauge.js" type="text/javascript"></script>
+<script src="gauges.js" type="text/javascript"></script>
 <script src="index.js" type="text/javascript"></script>
 </head>
 <body onload="onLoad()">
-<div class="navbar">
-	<a class="navbar" href="#update">Update</a>
-	<a class="navbar" href="#log">Log</a>
+
+
+<h2 id="log">Status</h2>
+<div id="output">
+	<div>Status: <span id="mode"></span></div>
+	<div>Cell Delta: <span id="celldelta"></span>mV</div>
+	<div>Highest Cell: <span id="cellhigh"></span>mV</div>
+	<div>Lowest Cell: <span id="celllow"></span>mV</div>
+
+	<figure class="highcharts-figure">
+		<div id="container-soc" class="chart-container"></div>
+		<div id="container-temp" class="chart-container"></div>
+		<div id="container-current" class="chart-container"></div>
+
+	</figure>
+	<div>SimpBMS Version: <span id="version"></span></div>
+
 </div>
 
 <p><a href="/wifi">Wifi Settings</a>
 
-<h2 id="update">Update</h2>
-<p>Use binary files (*.hex) for updating inverter firmware. Upload any other file for updating this web interface.</p>
-<form id="uploadform" enctype="multipart/form-data" action="edit" method="POST">
-	<input id="updatefile" name="updatefile" type="file" onchange="fileSelected();" />
-	<input type="button" onclick="uploadFile();" value="Upload" />
-</form>
-<div id="progress" class="graph">
-<div id="bar" style="width: 0"></div>
-</div>
-
-<h2 id="log">Status</h2>
-	<div id="output">
-
-	</div>
+	<h2 id="update">Update</h2>
+	<p>Use binary files (*.hex) for updating inverter firmware. Upload any other file for updating this web interface.</p>
+	<form id="uploadform" enctype="multipart/form-data" action="edit" method="POST">
+		<input id="updatefile" name="updatefile" type="file" onchange="fileSelected();" />
+		<input type="button" onclick="uploadFile();" value="Upload" />
+	</form>
 </body>
 </html>

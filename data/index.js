@@ -1,29 +1,29 @@
-/*
- * This file is part of the esp8266 web interface
- *
- * Copyright (C) 2018 Johannes Huebner <dev@johanneshuebner.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
 /** @brief excutes when page finished loading. Creates tables and chart */
-var output, websocket, clearBarTimeout
+var output, websocket,chartSpeed
+
+function setValue(id, value) {
+	const element = document.getElementById(id);
+	element.innerHTML = value
+}
+function updateText(data) {
+	const parts = data.split("=");
+	if (parts[0] == 'firm.val') {
+		setValue('version', parts[1]);
+	} else if (parts[0] == 'stat.txt') {
+		setValue('mode', parts[1]);
+	} else if (parts[0] == 'lowcell.val') {
+		setValue('celllow', parts[1]);
+	} else if (parts[0] == 'highcell.val') {
+		setValue('cellhigh', parts[1]);
+	} else if (parts[0] == 'celldelta.val') {
+		setValue('celldelta', parts[1]);
+	} 
+}
+
 function onLoad() {
 	output = document.getElementById("output");
 	chargerWebSocket("ws://"+ location.host +":81");
-
+	initGauges();
 }
 
 function onOpen(evt) {
@@ -32,16 +32,8 @@ function onOpen(evt) {
    
 function onMessage(evt) {
 	const json = JSON.parse(evt.data);
-
-	if (json.message && json.type != 'config') {
-		writeToScreen('<span style = "color: blue;">' +
-		json.message+'</span>');
-	} 
-
-	if (json.type == 'config') {
-		loadConfig(json.message)
-	}
-
+	updateGauge(json.message);
+	updateText(json.message);
  }
 
  function onError(evt) {
@@ -108,39 +100,4 @@ function uploadFile()
 
 	xmlhttp.open("POST", "/edit");
 	xmlhttp.send(fd);
-}
-
-/** @brief Runs a step of a firmware upgrade
- * Step -1 is resetting controller
- * Steps i=0..n send page i
- * @param step step to execute
- * @param file file path of upgrade image on server */
-function runUpdate(step,file)
-{	
-	var xmlhttp=new XMLHttpRequest();
-	xmlhttp.onload = function() 
-	{
-		if (xmlhttp.status != 200) {
-			document.getElementById("bar").innerHTML = "<p>Update Error!</p>";
-		} else {
-			document.getElementById("bar").innerHTML = "<p>Update Done!</p>";
-		}
-		setTimeout(function() { document.getElementById("bar").innerHTML = "" }, 5000);
-
-	}
-	xmlhttp.onerror = function() {
-		document.getElementById("bar").innerHTML = "<p>Update Error!</p>";
-		setTimeout(function() { document.getElementById("bar").innerHTML = "" }, 5000);
-
-	}
-
-	xmlhttp.open("GET", "/fwupdate?step=" + step + "&file=" + file);
-	xmlhttp.send();
-	document.getElementById("bar").innerHTML = "<p>Updating</p>";
-}
-
-function sendCmd(cmd) {
-	var xmlhttp=new XMLHttpRequest();
-	xmlhttp.open("POST", "/cmd?cmd=" + cmd);
-	xmlhttp.send();
 }
