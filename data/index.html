@@ -35,7 +35,7 @@
 	<div class="flex-block">
 		<div class="info-block">
 			<h3>Status</h3> 
-			<div class="data" id="mode">Drive</div>
+			<div class="data" id="mode">No Comms</div>
 		</div>
 		<div class="info-block">
 			<h3>Cell Delta</h3> 
@@ -55,14 +55,26 @@
 		<div id="container-soc" class="chart-container"></div>
 		<div id="container-temp" class="chart-container"></div>
 		<div id="container-current" class="chart-container"></div>
+	</figure>
+
+	<figure id="outlander-charger" class="highcharts-figure flex-block hidden">
+		<div id="container-charger-current" class="chart-container"></div>
+		<div id="container-charger-temp" class="chart-container"></div>
+		<div id="container-charger-voltage" class="chart-container"></div>
 
 	</figure>
 	<div>SimpBMS Version: <span id="version"></span></div>
-
+	<div id='chargeContainer'>
+		<div>Requested Charge Current: <span id="requestedChargeCurrent"></span></div>
+		<div>Charger status: <span id="chargerStatus"></span></div>
+	</div>
+	<div>AC Present: <span id="acPresent"></span></div>
+	<div><button id="acOverride">Override AC Present</button><button id="acOverrideOff" class="hidden">Remove AC Present Override</button></div>
 </div>
 
 <p><a href="/wifi">Wifi Settings</a>
 <p><a href="#" onclick="toggleHidden('update')">Upload Update</a>
+<p><a href="#" onclick="toggleHidden('settings')">Settings</a>
 <div id="update" class="hidden">
 	<h2 id="update">Update</h2>
 	<p>Upload any files for updating this web interface.</p>
@@ -70,6 +82,17 @@
 		<input id="updatefile" name="updatefile" type="file" onchange="fileSelected();" />
 		<input type="button" onclick="uploadFile();" value="Upload" />
 	</form>
+</div>
+<div id="settings" class="hidden">
+	<h2>Settings</h2>
+	<p>Update BMS settings.</p>
+	<div>Charge Setpoint: <span id="chargeSetpoint"></span>mV</div>
+	<div><input id="updateChargeSetpoint" />mV&nbsp;&nbsp;<button id="btnUpdateChargeSetpoint">Update</button></div>
+	<div>Charge Max: <span id="chargeMaxCurrent"></span>A</div>
+	<div><input id="updateChargeMaxCurrent" />A&nbsp;&nbsp;<button id="btnUpdateChargeMaxCurrent">Update</button></div>
+	<p>Changes above will be lost on a reboot unless saved.</p>
+	<div><button id="saveSettings">Save Changes</button></div>
+
 </div>
 </body>
 </html>

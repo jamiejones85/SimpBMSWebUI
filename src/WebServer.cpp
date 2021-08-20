@@ -9,6 +9,7 @@ void WebServer::setup() {
     server.on("/list", HTTP_GET, [this](){ handleFileList(); });
     server.on("/wifi", [this](){ handleWifi(); });
     server.on("/edit", HTTP_POST, [this](){ server.send(200, "text/plain", ""); }, [this](){ handleFileUpload(); });
+    server.on("/cmd", HTTP_POST, [this](){ handleCmd(); });
 
     server.onNotFound([this](){
         if(!handleFileRead(server.uri()))
@@ -21,6 +22,14 @@ void WebServer::setup() {
 
 void WebServer::loop() {
     server.handleClient();
+}
+
+void WebServer::handleCmd(){
+    if(server.hasArg("cmd")) {
+        String cmd = server.arg("cmd");
+        Serial.println(cmd);
+    }
+    server.send(200, "text/json", "{received: true}");
 }
 
 String WebServer::getContentType(String filename){

@@ -11,7 +11,7 @@ class WebServer {
         void handleFileList();
         void handleWifi();
         void handleFileUpload();
-        
+        void handleCmd();
         bool handleFileRead(String path);
         String getContentType(String filename);
 
