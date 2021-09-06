@@ -49,6 +49,15 @@ function updateText(data) {
 			hide('chargeContainer');
 
 		}
+	} else if (parts[0] == 'inverterstatus.val') {
+		if (parts[1] == 1) {
+			setValue('inverterStatus', "Run");
+		} else {
+			setValue('inverterStatus', "Off");
+
+		}
+
+		
 	} else if (parts[0] == 'lowcell.val') {
 		setValue('celllow', parts[1]);
 	} else if (parts[0] == 'highcell.val') {
@@ -65,6 +74,8 @@ function updateText(data) {
 		setValue('chargeSetpoint', parts[1])
 	} else if (parts[0] == 'chargecurrentmax.val') {
 		setValue('chargeMaxCurrent', parts[1])
+	} else if (parts[0] == 'evse_duty.val') {
+		setValue('evseDuty', parts[1]);
 	}
 }
 
