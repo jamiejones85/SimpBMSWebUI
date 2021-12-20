@@ -58,6 +58,7 @@ bool WebServer::handleFileRead(String path){
     if(LittleFS.exists(pathWithGz))
       path += ".gz";
     File file = LittleFS.open(path, "r");
+    server.sendHeader("Cache-Control", "max-age=2592000");
     size_t sent = server.streamFile(file, contentType);
     file.close();
     return true;
