@@ -73,6 +73,7 @@ int8_t connectionNumber = 0;
 
 void staCheck(){
   sta_tick.stop();
+
   if(!(uint32_t)WiFi.localIP()){
     WiFi.mode(WIFI_AP); //disable station mode
   }
@@ -114,9 +115,7 @@ void setup(void){
 
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);
-  
   webServer.setup();
-
 
 }
 
@@ -148,7 +147,7 @@ void loop(void){
   ArduinoOTA.handle();
   webSocket.loop();
   webServer.loop();
-
+  sta_tick.update();
   if(connectionNumber > 0 && Serial.available()) {
       char receivedChar = Serial.read();
 
